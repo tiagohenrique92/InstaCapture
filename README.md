@@ -2,7 +2,7 @@
 Get photos from Instagram (only public profiles) using Curl with PHP.
 
 # How to use
-```
+```php
 <?php
 require_once 'InstaCapture.php';
 
