@@ -1,5 +1,7 @@
 <?php
 
+namespace App;
+
 /**
  * InstaCapture by T2
  * Get photos from Instagram (only public profiles) using Curl with PHP.
@@ -48,10 +50,19 @@ class InstaCapture
     protected $profileUrl;
 
     /**
+     * InstaCapture constructor.
+     * @param string $url
+     */
+    public function __construct(string $url)
+    {
+        $this->profileUrl = preg_replace("#(\/+)$#", "", $url) . "/";
+    }
+
+    /**
      * Get the error code
      * @return int
      */
-    public function getErrorCode()
+    public function getErrorCode(): int
     {
         return $this->errorCode;
     }
@@ -60,7 +71,7 @@ class InstaCapture
      * Get the error message
      * @return string
      */
-    public function getErrorMessage()
+    public function getErrorMessage(): string
     {
         return $this->errorMessage;
     }
@@ -70,7 +81,7 @@ class InstaCapture
      * @return string Html code of profile
      * @throws Exception
      */
-    private function getHtmlProfile()
+    private function getHtmlProfile(): string
     {
         $ch = curl_init($this->profileUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -91,7 +102,7 @@ class InstaCapture
      * @return array List of photos
      * @throws Exception
      */
-    public function getPhotos()
+    public function getPhotos(): array
     {
         try {
             if (!$this->profileUrl) {
@@ -114,7 +125,7 @@ class InstaCapture
      * @return array List of photos
      * @throws Exception
      */
-    private function getPhotoList($html)
+    private function getPhotoList(string $html): array
     {
         $matches = array();
         $photoList = array();
@@ -154,16 +165,4 @@ class InstaCapture
 
         return $photoList;
     }
-
-    /**
-     * Set a profile url
-     * @param string $url
-     */
-    public function setProfileUrl($url)
-    {
-        if ($url) {
-            $this->profileUrl = preg_replace("#(\/+)$#", "", $url) . "/";
-        }
-    }
-
 }

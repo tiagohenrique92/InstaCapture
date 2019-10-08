@@ -1,0 +1,20 @@
+{
+    "name": "tiagohenrique92/insta-capture",
+    "description": "Get photos from Instagram (only public profiles) using Curl with PHP.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "tiagohenrique92",
+            "email": "h8.tiago@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require": {
+        "ext-curl": "*"
+    }
+}
