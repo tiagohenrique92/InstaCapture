@@ -3,7 +3,7 @@
 /**
  * InstaCapture by T2
  * Get photos from Instagram (only public profiles) using Curl with PHP.
- * 
+ *
  * @author tiago
  */
 class InstaCapture
@@ -81,8 +81,13 @@ class InstaCapture
 
         if (curl_error($ch)) {
             throw new Exception(curl_error($ch), self::ERROR_PROFILE_READ);
+        } elseif (curl_getinfo($ch, CURLINFO_HTTP_CODE) == 301) {
+            $url = curl_getinfo($ch, CURLINFO_REDIRECT_URL);
+            $this->setProfileUrl($url);
+            return $this->getHtmlProfile();
         }
 
+        curl_close($ch);
         return $html;
     }
 
